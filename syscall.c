@@ -109,6 +109,7 @@ extern int sys_print_syscalls(void);
 extern int sys_set_alarm(void);
 extern int sys_count_num_of_digits(void);
 
+
 static int (*syscalls[])(void) = {
 [SYS_fork]                sys_fork,
 [SYS_exit]                sys_exit,
