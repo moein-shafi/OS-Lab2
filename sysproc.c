@@ -123,9 +123,34 @@ sys_print_syscalls(void)
 }
 
 int
+wait_to_alarm(int ticks_duration)
+{
+  int start_tick = sys_uptime();
+
+  int now;
+
+  while (1)
+  {
+    now = sys_uptime();
+    if (now - start_tick == ticks_duration)
+      break;
+  }
+
+  cprintf("Timer Alarm !!!!\n%d seconds passed.\n", ticks_duration / 100);
+  return SUCCESS_CODE;
+}
+
+int
 sys_set_alarm(void)
 {
-  return 0;
+  int seconds;
+
+  if (argint(0, &seconds) < 0)
+    return ERROR_CODE;
+
+  int ticks_duration = seconds * 100;
+
+  return wait_to_alarm(ticks_duration);
 }
 
 int
