@@ -2,14 +2,14 @@
 #include "stat.h"
 #include "fcntl.h"
 #include "user.h"
-#define MAX_LINE 1024
 
 int main(int argc, char *argv[])
 {
-   char buffer[MAX_LINE];
-   printf(1, "Enter number : \n");
-   read(1, buffer, MAX_LINE);
-   int number = atoi(buffer);
+   if(argc != 2){
+      printf(2, "Usage: count_num_of_digits number\n");
+      exit();
+   }
+   int number = atoi(argv[1]);
    int reg_value;
 
    __asm__("movl %%edx, %0" : "=r" (reg_value));
