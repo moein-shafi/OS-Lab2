@@ -178,7 +178,7 @@ syscall(void)
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
 
-    int curpoc_syscalls = curproc->number_of_syscalls++;
+    int curpoc_syscalls = ++curproc->number_of_syscalls;
     curproc->syscalls[curpoc_syscalls - 1].name = syscallnames[num];
     curproc->syscalls[curpoc_syscalls - 1].return_value = curproc->tf->eax;
   } else {
