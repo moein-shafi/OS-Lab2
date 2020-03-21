@@ -540,12 +540,12 @@ print_syscalls(void)
 {
   struct proc *p;
   int counter;
-  for (p = ptable.proc; p < &ptable.proc[NPROC - 1]; p++)
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
   {
     if (p->pid == 0 || p->pid == myproc()->pid)
-      break;
+      continue;
     cprintf("Proc %s %d\n", p->name, p->pid);
-    for (counter = 0; counter < p->number_of_syscalls - 1; counter++)
+    for (counter = 0; counter < p->number_of_syscalls; counter++)
       cprintf("%d) %s: %d\n", counter, p->syscalls[counter].name, p->syscalls[counter].return_value);
     cprintf("\n\n");
     
