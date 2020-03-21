@@ -1,3 +1,5 @@
+#define MAX_PROC_SYSCALLS 100
+
 // Per-CPU state
 struct cpu {
   uchar apicid;                // Local APIC ID
@@ -32,12 +34,10 @@ struct context {
   uint eip;
 };
 
-/*struct system_call {
+struct systemcall {
   char *name;
   int return_value;
-  struct system_call* next;
-  struct system_call* prev;
-};*/
+};
 
 enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
@@ -56,8 +56,8 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-  //struct system_call *sc;
-  //head_sc = (struct syscall*)malloc(sizeof(struct syscall));
+  struct systemcall syscalls[MAX_PROC_SYSCALLS];
+  int number_of_syscalls;
 };
 
 // Process memory is laid out contiguously, low addresses first:

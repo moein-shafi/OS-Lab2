@@ -150,7 +150,7 @@ sys_set_alarm(void)
 
   int ticks_duration = seconds * 100;
 
-  int parent_pid = sys_getpid();
+  // int parent_pid = sys_getpid();
   int child_pid = sys_fork();
 
   if (child_pid < 0)

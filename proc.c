@@ -538,21 +538,17 @@ procdump(void)
 int
 print_syscalls(void)
 {
-  /*
   struct proc *p;
-  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+  int counter;
+  for (p = ptable.proc; p < &ptable.proc[NPROC - 1]; p++)
   {
-    cprintf("Proc %d:\n", p->pid);
-    struct system_call *mysc = p->sc;
-    while (mysc->prev)
-    {
-      mysc = mysc->prev;
-    }
-    while (mysc)
-    {
-      cprintf("\t-%s : %d\n", mysc->name, mysc->return_value);
-      mysc = mysc->next;
-    }
-  }*/
+    if (p->pid == 0 || p->pid == myproc()->pid)
+      break;
+    cprintf("Proc %s %d\n", p->name, p->pid);
+    for (counter = 0; counter < p->number_of_syscalls - 1; counter++)
+      cprintf("%d) %s: %d\n", counter, p->syscalls[counter].name, p->syscalls[counter].return_value);
+    cprintf("\n\n");
+    
+  }
   return 0;
 }

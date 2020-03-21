@@ -138,8 +138,8 @@ static int (*syscalls[])(void) = {
 [SYS_set_alarm]           sys_set_alarm,
 [SYS_count_num_of_digits] sys_count_num_of_digits,
 };
-/*
-static char* syscallnames[] = {
+
+static char *const syscallnames[] = {
 [SYS_fork]                "fork",
 [SYS_exit]                "exit",
 [SYS_wait]                "wait",
@@ -167,7 +167,7 @@ static char* syscallnames[] = {
 [SYS_set_alarm]           "set_alarm",
 [SYS_count_num_of_digits] "count_num_of_digits",
 };
-*/
+
 void
 syscall(void)
 {
@@ -177,12 +177,10 @@ syscall(void)
   num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     curproc->tf->eax = syscalls[num]();
-    /*
-    curproc->sc->next->name = syscallnames[num];
-    curproc->sc->next->return_value = curproc->tf->eax;
-    curproc->sc->next->prev = curproc->sc;
-    curproc->sc = curproc->sc->next;
-    */
+
+    int curpoc_syscalls = curproc->number_of_syscalls++;
+    curproc->syscalls[curpoc_syscalls - 1].name = syscallnames[num];
+    curproc->syscalls[curpoc_syscalls - 1].return_value = curproc->tf->eax;
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             curproc->pid, curproc->name, num);
