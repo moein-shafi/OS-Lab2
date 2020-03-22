@@ -139,7 +139,7 @@ wait_to_alarm(int ticks_duration)
       return ERROR_CODE;
     if (now - start_tick == ticks_duration)
     {
-      cprintf("Timer Alarm !!!!\n%d seconds passed.\n", ticks_duration / 100);
+      cprintf("Timer Alarm !!!!\n%d seconds passed.\n$ ", ticks_duration / 100);
       break;
     }
   }
