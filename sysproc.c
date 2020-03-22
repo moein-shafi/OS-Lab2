@@ -150,6 +150,8 @@ sys_set_alarm(void)
   int ticks_duration = seconds * 100;
 
   wait_to_alarm(ticks_duration);
+  struct proc *curproc = myproc();
+        curproc->parent = 0;
   return SUCCESS_CODE;
 }
 

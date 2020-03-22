@@ -20,6 +20,5 @@ int main(int argc, char* argv[])
         set_alarm(seconds);
         exit();
     }
-//    wait();
     exit();
 }
