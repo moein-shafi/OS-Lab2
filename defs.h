@@ -10,9 +10,6 @@ struct sleeplock;
 struct stat;
 struct superblock;
 
-#define ERROR_CODE -1
-#define SUCCESS_CODE 0
-
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);

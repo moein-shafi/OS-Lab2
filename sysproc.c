@@ -7,6 +7,8 @@
 #include "mmu.h"
 #include "proc.h"
 
+static int NEW_SET_ALARM;
+
 int
 sys_fork(void)
 {
@@ -125,6 +127,7 @@ sys_print_syscalls(void)
 int
 wait_to_alarm(int ticks_duration)
 {
+  NEW_SET_ALARM = 0;
   int start_tick = sys_uptime();
 
   int now;
@@ -132,17 +135,21 @@ wait_to_alarm(int ticks_duration)
   while (1)
   {
     now = sys_uptime();
+    if (NEW_SET_ALARM == 1)
+      return ERROR_CODE;
     if (now - start_tick == ticks_duration)
+    {
+      cprintf("Timer Alarm !!!!\n%d seconds passed.\n", ticks_duration / 100);
       break;
+    }
   }
-
-  cprintf("Timer Alarm !!!!\n%d seconds passed.\n", ticks_duration / 100);
   return SUCCESS_CODE;
 }
 
 int
 sys_set_alarm(void)
 {
+  NEW_SET_ALARM = 1;
   int seconds;
   if (argint(0, &seconds) < 0)
     return ERROR_CODE;
@@ -151,7 +158,7 @@ sys_set_alarm(void)
 
   wait_to_alarm(ticks_duration);
   struct proc *curproc = myproc();
-        curproc->parent = 0;
+  curproc->parent = 0;
   return SUCCESS_CODE;
 }
 
