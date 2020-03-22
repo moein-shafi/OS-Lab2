@@ -144,28 +144,12 @@ int
 sys_set_alarm(void)
 {
   int seconds;
-
   if (argint(0, &seconds) < 0)
     return ERROR_CODE;
 
   int ticks_duration = seconds * 100;
 
-  // int parent_pid = sys_getpid();
-  int child_pid = sys_fork();
-
-  if (child_pid < 0)
-  {
-    cprintf("sysproc.c::sys_set_alarm::fork new process failed!\n");
-    return ERROR_CODE;
-  }
-  else if (child_pid == 0)
-  {
-    cprintf("Child process\n");
-    // kill(parent_pid);
-    wait_to_alarm(ticks_duration);
-  }
-
-  wait();
+  wait_to_alarm(ticks_duration);
   return SUCCESS_CODE;
 }
 

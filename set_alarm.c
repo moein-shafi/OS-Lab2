@@ -9,6 +9,17 @@ int main(int argc, char* argv[])
         exit();
     }
     int seconds = atoi(argv[1]);
-    set_alarm(seconds);
+    int cpid = fork();
+    if (cpid < 0)
+    {
+        printf(1, "fork problem!\n");
+        exit();
+    }
+    if (cpid == 0)
+    {
+        set_alarm(seconds);
+        exit();
+    }
+//    wait();
     exit();
 }
