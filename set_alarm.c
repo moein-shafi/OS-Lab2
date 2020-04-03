@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
         printf(1, "command must have 1 argument, %d given.\n", argc - 1);
         exit();
     }
-    int seconds = atoi(argv[1]);
+    int milli_seconds = atoi(argv[1]);
     int cpid = fork();
     if (cpid < 0)
     {
@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     }
     if (cpid == 0)
     {
-        set_alarm(seconds);
+        set_alarm(milli_seconds);
         exit();
     }
     exit();

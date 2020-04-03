@@ -139,7 +139,7 @@ wait_to_alarm(int ticks_duration)
       return ERROR_CODE;
     if (now - start_tick == ticks_duration)
     {
-      cprintf("Timer Alarm !!!!\n%d seconds passed.\n$ ", ticks_duration / 100);
+      cprintf("Timer Alarm !!!!\n%d milliseconds passed.\n$ ", ticks_duration * 10);
       break;
     }
   }
@@ -150,11 +150,11 @@ int
 sys_set_alarm(void)
 {
   NEW_SET_ALARM = 1;
-  int seconds;
-  if (argint(0, &seconds) < 0)
+  int milli_seconds;
+  if (argint(0, &milli_seconds) < 0)
     return ERROR_CODE;
 
-  int ticks_duration = seconds * 100;
+  int ticks_duration = milli_seconds / 10;
 
   wait_to_alarm(ticks_duration);
   struct proc *curproc = myproc();
